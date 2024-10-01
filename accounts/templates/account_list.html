@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  List of Accounts
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="text-center">List of Accounts</h1>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>UAN</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Date of Birth</th>
+          <th>Address</th>
+          <th>Balance</th>
+          <th>Currency</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for account in accounts %}
+          <tr>
+            <td>{{ account.user.username }}</td>
+            <td>{{ account.UAN }}</td>
+            <td>{{ account.first_name }}</td>
+            <td>{{ account.last_name }}</td>
+            <td>{{ account.date_of_birth }}</td>
+            <td>{{ account.address }}</td>
+            <td>{{ account.balance }}</td>
+            <td>{{ account.currency }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7" class="text-center">No accounts available.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+{% endblock %}

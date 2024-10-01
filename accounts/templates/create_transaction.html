@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Transfer Money
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="text-center">Create a New Transaction</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group flex-column d-flex">
+        {{ form.from_account.label_tag }}
+        {{ form.from_account }}
+      </div>
+      <div class="form-group  flex-column d-flex">
+        {{ form.recipient_account.label_tag }}
+        {{ form.recipient_account }}
+      </div>
+      <div class="form-group  flex-column d-flex">
+        {{ form.amount.label_tag }}
+        {{ form.amount }}
+      </div>
+      <div class="form-group  flex-column d-flex">
+        {{ form.currency.label_tag }}
+        {{ form.currency }}
+      </div>
+      <div class="form-group  flex-column d-flex">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+{% endblock %}

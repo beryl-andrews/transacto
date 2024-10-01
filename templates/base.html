@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Transacto
+      {% endblock %}
+    </title>
+    <style>
+      header {
+        background-color: #000;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+      }
+      .content-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+      }
+      .message-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        text-align: center;
+      }
+      .alert-info {
+        display: inline-block;
+        margin: 0 auto;
+        padding: 15px;
+        background-color: #17a2b8;
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+
+    <!-- Message container -->
+    {% if messages %}
+      <div class="message-container">
+        {% for message in messages %}
+          <div class="alert alert-info" id="flashMessage">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Transacto</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        {% if user.is_authenticated %} 
+            {% if user.user_type == 'admin' %} 
+             <ul class="navbar-nav mr-auto">  
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'create_account' %}">Add Account</a>
+               </li>
+               <li class="nav-item">
+                     <a class="nav-link" href="{% url 'account_list' %}">Account Listing</a>
+               </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'transaction_list' %}">Transactions</a>
+               </li>
+	         </ul>
+            {% endif %}
+            {% if user.user_type == 'user' %}
+             <ul class="navbar-nav mr-auto">
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_account_list' %}">Account Details</a>
+               </li>
+               <li class="nav-item">
+                     <a class="nav-link" href="{% url 'create_transaction' %}">Transfer</a>
+               </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_transactions_list' %}">Transactions</a>
+               </li>
+	         </ul>
+            {% endif %}
+          {% endif %}
+      </div>
+      {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger nav-link">Logout</button>
+        </form>
+       {% endif %}
+    </nav>
+
+    <!-- Main content -->
+    <div class="container content-center">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Function to hide the message after 10 seconds
+      setTimeout(function() {
+        var flashMessage = document.getElementById("flashMessage");
+        if (flashMessage) {
+          flashMessage.style.display = "none"; // Hide the message
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Create Account
+{% endblock %}
+
+{% block content %}
+  <div class="card mt-5" style="width: 400px; padding: 20px;">
+    <h1 class="card-title text-center">Create a New Account</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group flex-column d-flex">
+        <label for="id_username">User</label>
+        {{ form.user }}
+      </div>
+      <div class="form-group flex-column d-flex">
+        <label for="id_username">First Name</label>
+        {{ form.first_name }}
+      </div>
+      <div class="form-group flex-column d-flex">
+        <label for="id_username">Last Name</label>
+        {{ form.last_name }}
+      </div>
+      <div class="form-group flex-column d-flex">
+        <label for="id_username">Date of Birth</label>
+        {{ form.date_of_birth }}
+      </div>
+      <div class="form-group flex-column d-flex">
+        <label for="id_username">Address</label>
+        {{ form.address }}
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+    </form>
+    <div class="text-center mt-3">
+      <a href="{% url 'create_account' %}">Clear</a>
+    </div>
+  </div>
+{% endblock %}
